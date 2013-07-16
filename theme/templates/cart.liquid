@@ -29,7 +29,7 @@ function remove_item(id) {
       <tr>
         <td class="span2 hidden-phone"><img src="{{ i.product.featured_image | product_img_url: 'small' }}" class="thumbnail"></td>
         <td>
-          <strong>{{ i.product.title | link_to: i.product.url }}</strong>
+          <strong>{%if i.properties.printpdf %}<a href="javascript:void(0);" class="" {% if i.properties.printpdf %}data-printpdf-id="{{i.properties.printpdf}}"{% endif %}>{{ i.product.title }}</a>{% else %}{{ i.product.title | link_to: i.product.url }}{% endif %}</strong>
           <small class="muted">{{ i.title | remove: i.product.title | remove: ' - ' }}</small>
         </td>
         <td class="money hidden-phone"><span class='money'>{{ i.price | money_with_currency | replace: ' ','&nbsp' }}</span></td>

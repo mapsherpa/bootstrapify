@@ -1,3 +1,4 @@
+{% include "is_mapsherpa_product" %}
 {% capture vars %}
 {% if product.featured_image == blank %}
 {% assign image = '<div class="image_placeholder">Product Image</div>' %}
@@ -11,9 +12,15 @@
       <h1 class="page-header">{{ page_title }}</h1>
       
       <div class="lead">
+        {% if is_mapsherpa_product %}
+        
+        <span id="price-field"><small>Starting at </small>{{product.price_min | money_with_currency}}</span>
+        
+        {% else %}
         <span id="price-field"></span>
         <span id="sale-field" class="label label-success">{% include '__localize' with 'On sale' %}</span>
         <del id="compare-at-price-field" class="muted"></del>
+        {% endif %}
       </div>
       
       {% include 'product-add-to-cart-form' %}

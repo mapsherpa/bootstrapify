@@ -2,6 +2,7 @@
   "current": "Bootstrapify",
   "presets": {
     "Bootstrapify": {
+      "map-placement": "container",
       "customer_layout": "customer_area",
       "truncate-words": "25",
       "maximum-tag-buttons": "10",
@@ -162,6 +163,7 @@
       "collection-to-link-to-if-cart-empty": "all-products"
     },
     "Hi-fi": {
+      "map-placement": "container",
       "customer_layout": "customer_area",
       "truncate-words": "25",
       "maximum-tag-buttons": "10",

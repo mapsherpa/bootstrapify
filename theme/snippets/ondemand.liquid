@@ -1,0 +1,83 @@
+<div id="ondemand-customize" class="">
+  <div class="row{%if settings.map-placement == 'wide' or settings.map-placement == 'full' %}-fluid{% endif %}">
+    <div class="ondemand-sidebar span3 hidden-phone">
+      <div class="ondemand-sidebar-inner">
+        {% if settings.logo-placement == 'sidebar' %}<header class="page-header">
+          <h1 class="text-{{ settings.logo-alignment }}"><a href="/">{% include 'logo' %}</a></h1>
+        </header>{% endif %}
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="javascript:void(0);" class="btn-hide-ondemand" title="Back"><i class="icon-arrow-left"></i> Back</a></li>
+        </ul>
+        <form class="ondemand-options well">
+          <div class="orientation-options">
+            <fieldset class="nav nav-list">
+              <legend class="nav-header">Orientation</legend>
+              <label class="radio">
+                <input type="radio" name="orientation" id="orientation-1" value="landscape" checked>
+                Landscape
+              </label>
+              <label class="radio">
+                <input type="radio" name="orientation" id="orientation-2" value="portrait">
+                Portrait
+              </label>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+      <div class="ondemand-sidebar-footer">
+        <div class="form-actions">
+          <div class="lead">
+            <span class="ondemand-price"></span>
+          </div>
+          <a class="btn btn-block btn-primary add-to-cart">Add to Cart</a>
+        </div>
+      </div>
+    </div>
+    <div class="ondemand-map span9">
+      <div class="ondemand-menu">
+        <div class="btn-group">
+          <a class="btn dropdown-togggle visible-phone" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></a>
+          <div class="dropdown-menu">
+            <form class="ondemand-options">
+              <div class="orientation-options">
+                <fieldset class="nav nav-list">
+                  <legend class="nav-header">Orientation</legend>
+                  <label class="radio">
+                    <input type="radio" name="orientation" id="orientation-1" value="landscape" checked>
+                    Landscape
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="orientation" id="orientation-2" value="portrait">
+                    Portrait
+                  </label>
+                </fieldset>
+              </div>
+            </form>
+          </div>
+          <a class="btn btn-primary add-to-cart visible-phone"><i class="icon-arrow-right"></i><i class="icon-shopping-cart"></i></a>
+          <a class="btn ondemand-price visible-phone" disabled></a>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+(function($){
+  $(document).ready(function() {
+    mapsherpaProduct({{product | json}});
+  });
+})(jQuery);
+</script>
+<script type="text/template" id="option-header">
+  <fieldset class="nav nav-list">
+    <legend class="nav-header">${option}</legend>
+</script>
+<script type="text/template" id="option-item">
+    <label class="radio">
+      <input type="radio" name="${optionName}" id="${optionId}" value="${safeValue}" data-option="${optionData}" ${checked}>
+      ${value}
+    </label>
+</script>
+<script type="text/template" id="option-footer">
+  </fieldset>
+</script>

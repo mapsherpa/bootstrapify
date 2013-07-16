@@ -1,0 +1,252 @@
+/* Bootstrap Overrides */
+
+body {
+ padding-bottom: 0px;
+}
+
+body.ondemand-full.ondemand-show {
+  padding-top: 40px;
+}
+
+body.ondemand-full.ondemand-show .navbar-fixed-bottom,
+body.ondemand-full.ondemand-show .footer {
+  display: none;
+}
+
+body.ondemand-show .navbar-fixed-bottom {
+  display: none;
+}
+
+.navbar-fixed-bottom {
+ margin-top: 0px;
+ position: static;
+}
+
+label.disabled {
+ color: red;
+}
+
+.container {
+  position: relative;
+}
+
+.radio input[type=radio],
+.checkbox input[type=checkbox] {
+  margin-left: -18px;
+}
+
+.ondemand-sidebar {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.ondemand-sidebar .form-actions .lead {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.ondemand-sidebar-inner {
+  position: relative;
+  overflow: auto;
+}
+
+.ondemand-sidebar-inner .page-header {
+  margin: 0;
+}
+
+.ondemand-sidebar-inner > ul.nav {
+  margin: 5px 0;
+}
+
+.ondemand-sidebar-inner .well {
+  padding: 0;
+}
+
+.ondemand-full .ondemand-sidebar-inner .well {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.ondemand-sidebar-inner .well .nav-header {
+  margin-bottom: 10px;
+}
+.ondemand-sidebar-inner .well .label {
+  font-size: 12px;
+}
+
+.ondemand-sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  
+  -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.1);
+  box-shadow: 0 -1px 10px rgba(0,0,0,.1);
+}
+
+.ondemand-sidebar-footer .form-actions {
+  margin: 0px;
+}
+
+/* mapsherpa customize window */
+
+.ondemand-show > .container > .row {
+  display: none;
+}
+
+.ondemand-show #ondemand-customize {
+  display: block;
+}
+
+#ondemand-customize {
+  display: none; 
+  position: relative;
+}
+
+.ondemand-full #ondemand-customize {
+  padding: 0;
+}
+
+#ondemand-customize .row,
+#ondemand-customize .row-fluid {
+  height: 100%;
+}
+
+.ondemand-map {
+  position: relative;
+  height: 100%;
+}
+
+.ondemand-full #ondemand-customize .ondemand-map {
+  margin: 0;
+  width: 77%; /* 100% - span3 % */
+}
+
+.ondemand-full #ondemand-customize .ondemand-sidebar {
+  width: 23%;
+}
+
+.ondemand-menu {
+}
+
+.ondemand-menu .btn[disabled] {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+#ondemand-customize #mapsherpa-pod {
+  position: absolute;
+  z-index: 1020; /* drop below nav bar */
+  top: 0px !important;
+}
+
+#ondemand-customize .ms-pod-mask {
+  display: none;
+}
+
+#ondemand-customize .ms-pod-modal {
+  position: absolute;
+  top: 0px !important;
+  left: 0px;
+  width: 100% !important;
+  height: 100% !important;
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+}
+
+#ondemand-customize .ms-pod-title,
+#ondemand-customize .ms-pod-btn-close {
+  display: none;
+}
+
+#ondemand-customize .ms-pod-header,
+#ondemand-customize .ms-pod-body {
+  margin: 0px;
+}
+
+#ondemand-customize .ms-pod-header {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 10;
+}
+
+#ondemand-customize #mapsherpa-pod .ms-pod-inner {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#ondemand-customize  #mapsherpa-pod .ms-pod-body {
+  height: 100% !important;
+}
+
+#ondemand-customize .ms-pod-labels {
+  position: absolute;
+  left: 45px;
+  top: 11px;
+  display: none;
+}
+
+#ondemand-customize .ms-pod-buttons {
+  top: 10px;
+}
+
+#ondemand-customize .ms-pod-addtocart {
+  display: none;
+}
+
+/* responsive tweaks */
+
+@media (min-width: 768px) {
+  .ondemand-wide #ondemand-customize {
+    padding: 0 2.127659574468085%;
+  }
+}
+
+@media (max-width: 979px) {
+  body.ondemand-full.ondemand-show {
+    padding-top: 0px; 
+  }
+  .ondemand-full.ondemand-show .navbar-fixed-top {
+     margin: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  #ondemand-customize .ms-pod-buttons {
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    right: inherit; 
+  }
+
+  .ondemand-full.ondemand-show,
+  .ondemand-wide.ondemand-show,
+  .ondemand-container.ondemand-show {
+    padding: 0px;
+  }
+
+  .ondemand-wide.ondemand-show .navbar-fixed-top,
+  .ondemand-container.ondemand-show .navbar-fixed-top {
+     margin: 0px;
+  }
+
+  .ondemand-full.ondemand-show #ondemand-customize .ondemand-map {
+    width: 100%;
+  }
+  .ondemand-show .brand,
+  .ondemand-show .page-header {
+    display: none;
+  }
+}

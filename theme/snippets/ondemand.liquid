@@ -36,6 +36,7 @@
     <div class="ondemand-map span9">
       <div class="ondemand-menu">
         <div class="btn-group">
+          <a class="btn visible-phone"><i class="icon-arrow-left"></i></a>
           <a class="btn dropdown-togggle visible-phone" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></a>
           <div class="dropdown-menu">
             <form class="ondemand-options">
@@ -74,7 +75,7 @@
 </script>
 <script type="text/template" id="option-item">
     <label class="radio">
-      <input type="radio" name="${optionName}" id="${optionId}" value="${safeValue}" data-option="${optionData}" ${checked}>
+      <input type="radio" name="${optionName}" class="${optionId}" value="${safeValue}" data-option="${optionData}" ${checked}>
       ${value}
     </label>
 </script>

@@ -5,10 +5,20 @@
   {% include 'meta' %}
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
   
+  <!--
+    TODO: create a 144x144px home screen icon and 320 x 460 splash screen
+  <link rel="apple-touch-icon" href="{{ 'icon.png' | asset_url }}"/>
+  <link rel="apple-touch-startup-image" href="{{ splash.png | asset_url }}" />
+  -->
+    
   {{ '_base.css' | asset_url | stylesheet_tag }}
   {{ '_settings.scss.css' | asset_url | stylesheet_tag }}
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+  
+  {{ 'mapsherpa.css' | asset_url | stylesheet_tag }}
   
   {% include 'fonts' %}
   
@@ -26,10 +36,19 @@
   {{ 'bootstrap-popover.js' | asset_url | script_tag }}
   {{ 'bootstrap-typeahead.js' | asset_url | script_tag }}
   
+  {% include 'is_mapsherpa_product' %}
+  {% if is_mapsherpa_product or template == 'cart' %}
+  <link rel="stylesheet" href="https://d101wqg5ahvqxl.cloudfront.net/bluetrail/clientdb/ondemand-api.css" type="text/css" charset="utf-8">
+  <!--[if lte IE 8]><link rel="stylesheet" href="https://d101wqg5ahvqxl.cloudfront.net/bluetrail/clientdb/ondemand-api-ie.js" /><![endif]-->
+  <script src="https://d101wqg5ahvqxl.cloudfront.net/bluetrail/clientdb/ondemand-api.js" type="text/javascript" charset="utf-8"></script>
+  {% endif %}
+
+  {{ 'mapsherpa.js' | asset_url | script_tag }}
+  
   {{ content_for_header }}
 </head>
 
-<body class="{% if settings.show-multiple-currencies %} currencies{% endif %}">
+<body class="ondemand-{{settings.map-placement}}{% if settings.show-multiple-currencies %} currencies{% endif %}">
   {% include 'navbar' %}
   
   {% if settings.slider-placement == "full-width" and template == "index" %}{% include 'slider' %}{% endif %}
@@ -55,8 +74,20 @@
         {{ content_for_layout }}
       </div>
     </div>
+    
+    {% if settings.map-placement == 'container' %}
+    {% if is_mapsherpa_product %}
+    {% include "ondemand" %}
+    {% endif %}
+    {% endif %}
+    
   </div>
   
+  {% if settings.map-placement == 'wide' or settings.map-placement == 'full' %}
+  {% if is_mapsherpa_product %}
+  {% include "ondemand" %}
+  {% endif %}
+  {% endif %}
   {% include 'footer' %}
   {% include 'currencies' %}
 </body>

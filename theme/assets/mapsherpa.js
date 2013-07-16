@@ -1,6 +1,10 @@
 (function($) {
   $(document).ready(function(doc) {
     
+    setTimeout(function() {
+      window.scrollTo(0,1);
+    }, 0);
+    
     var extent;
     
     // wait for mapsherpa to initialize before we kick off everything
@@ -48,7 +52,7 @@
         .insertBefore('.ondemand-menu .add-to-cart');
       $('.ms-pod-preview').html("<i class='icon-eye-open'></i><span class='hidden-phone'> Preview</span>");
       $('.ms-pod-customize').html("<i class='icon-pencil'></i><span class='hidden-phone'> Customize</span>");
-	  $('.ondemand-menu').appendTo('.ms-pod-buttons');
+	    $('.ondemand-menu').appendTo('.ms-pod-buttons');
       $('body').on('click', '.btn-hide-ondemand', function() {
         $('body').removeClass('ondemand-show');
       });
@@ -62,7 +66,7 @@
         
         $('body').addClass('ondemand-show');
         resize();
-        customize(productId, templateId, variant.id, 'landscape', extent);
+        customize(productId, templateId, variant.id, currentLayout, extent);
       });
     
       $('body').on('click', '.add-to-cart', function() {
@@ -74,52 +78,65 @@
         mapsherpa.preview(id);
       });
       
-      $('body').on('click', '.ms-pod-preview').click(function() {
-        $('.ondemand-sidebar input[type=radio]').prop('disabled', true);
+      $('body').on('click', '.ms-pod-preview', function() {
+        $('.ondemand-options input[type=radio]').prop('disabled', true);
       });
       
-      $('body').on('click', '.ms-pod-customize').click(function() {
-        $('.ondemand-sidebar input[type=radio]').prop('disabled', false);
+      $('body').on('click', '.ms-pod-customize', function() {
+        $('.ondemand-options input[type=radio]').prop('disabled', false);
       })
 
-      $('body').on('click', '[name="orientation"]', function(e) {
+      $('body').on('change', '[name="orientation"]', function(e) {
+        currentLayout = $(this).val();
         mapsherpa.setLayout($(this).val());
       });
 
     }
     
+    var currentProduct
+      , currentTemplate
+      , currentLayout = 'landscape'
+      ;
     function customize(productid, templateid, variantid, layout, extent) {
-      mapsherpa.customize(productid, templateid, {layout: layout, extent: extent}, function(err, printpdf) {
-        if (err) {
-          alert(err.message);
-        } else {
-          $('body').removeClass('ondemand-show');
-          $.ajax('/cart/add.js', {
-            type: 'POST',
-            data: {
-              id: variantid,
-              quantity: 1,
-              'properties[printpdf]': printpdf.id
-            },
-            dataType: 'json',
-            success: function(line_item) {
-              $.ajax('/cart.js', {
-                type: 'GET',
-                dataType: 'json',
-                success: function(cart) {
-                $(".cart-item-badge").text('(' + cart.item_count + ' item' + (cart.item_count > 1 ? 's':'') + ')');
-                // $('#afterAdd').modal({show:true});
-                }
-              });
-            }
-          });
-        }
-      });
+      if (currentProduct != productid || currentTemplate != templateid || currentLayout !== layout) {
+        currentProduct = productid;
+        currentTemplate = templateid;
+        currentLayout = layout;
+        mapsherpa.customize(productid, templateid, {layout: layout, extent: extent}, function(err, printpdf) {
+          if (err) {
+            alert(err.message);
+          } else {
+            $('body').removeClass('ondemand-show');
+            $.ajax('/cart/add.js', {
+              type: 'POST',
+              data: {
+                id: variantid,
+                quantity: 1,
+                'properties[printpdf]': printpdf.id
+              },
+              dataType: 'json',
+              success: function(line_item) {
+                $.ajax('/cart.js', {
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(cart) {
+                    var itemCount = '(' + cart.item_count + ' item' + (cart.item_count > 1 ? 's':'') + ')'
+                    $('.cart-item-badge').text(itemCount);
+                    $('a[href="/cart"]').html('<strong>View cart</strong> ' + itemCount);
+                    // $('#afterAdd').modal({show:true});
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
     }
       
     var uniqueOptions;
     var mapping;
     var selectedOptions;
+    var currentVariant;
   
     window.mapsherpaProduct = function(product) {
       uniqueOptions = getUniqueOptions(product);
@@ -148,20 +165,37 @@
           $('<div class=""></div>').html(html).appendTo('.ondemand-options');
         }
     
-        $('[name='+option.replace(' ', '-')+']').change(function() {
+        $('body').on('change', '[name='+option.replace(' ', '-')+']', function() {
           selectedOptions[$(this).attr('data-option')] = $(this).val();
           updateOptions(product);
           updatePrice();
           
           var variant = getVariant(mapping, selectedOptions);
-          var data = variant.sku.split('-');
-          var productId = data[0];
-          var templateId = data[1];
-          var extent = null;
-        
-          customize(productId, templateId, variant.id, 'landscape', extent);
+          if (variant) {
+            var data = variant.sku.split('-');
+            var productId = data[0];
+            var templateId = data[1];
+            customize(productId, templateId, variant.id, currentLayout, extent);
+          }
         });
       }
+      
+      $('.ondemand-menu fieldset.nav-list').each(function() {
+        var $this = $(this);
+        var select = $('<select></select>');
+        $this.find('label').each(function() {
+          var opt = $('<option></option>');
+          var input = $(this).children('input');
+          select.attr('name', input.attr('name'));
+          select.attr('data-option', input.attr('data-option'));
+          opt.attr('class', input.attr('class'));
+          opt.text(input.val());
+          opt.appendTo(select);
+          $(this).remove();
+        });
+        select.appendTo($this);
+      });
+      
       updateOptions(product);
       updatePrice();
     }
@@ -171,16 +205,16 @@
       var options = uniqueOptions[product.options[1]];
     
       for (var i=0, n=options.length; i<n; i++) {
-        var el = $('#'+product.options[1]+'-'+i)
+        var el = $('.'+product.options[1]+'-'+i)
         if (getVariant(mapping, {option0: option0, option1: options[i] })) {
           el.prop('disabled', false);
-          el.parent().removeClass('disabled');
+          el.parent('label').removeClass('disabled text-error');
         } else {
           if (el.checked) {
             // do something about it being checked
           }
           el.prop('disabled', true);
-          el.parent().addClass('disabled');
+          el.parent('label').addClass('disabled text-error');
         }
       }
     }

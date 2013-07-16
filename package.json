@@ -1,0 +1,26 @@
+{
+  "name": "bootstrapify-mapsherpa",
+  "version": "0.0.0",
+  "description": "mapsherpa theme based on bootstrapify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapsherpa/bootstrapify.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "1323d0f8ce264e1990291bbfb8bf0a6c9252aeae",
+  "bugs": {
+    "url": "https://github.com/mapsherpa/bootstrapify/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "growl": "~1.7.0",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-shopify": "git@github.com:mapsherpa/grunt-shopify.git"
+  }
+}

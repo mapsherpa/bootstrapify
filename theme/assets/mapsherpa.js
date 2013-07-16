@@ -49,10 +49,10 @@
       $('.ms-pod-preview, .ms-pod-customize')
         .removeClass('ms-pod-btn')
         .addClass('btn')
-        .insertBefore('.ondemand-menu .add-to-cart');
+        //.insertBefore('.ondemand-menu .add-to-cart');
       $('.ms-pod-preview').html("<i class='icon-eye-open'></i><span class='hidden-phone'> Preview</span>");
       $('.ms-pod-customize').html("<i class='icon-pencil'></i><span class='hidden-phone'> Customize</span>");
-	    $('.ondemand-menu').appendTo('.ms-pod-buttons');
+	    //$('.ondemand-menu').appendTo('.ms-pod-buttons');
       $('body').on('click', '.btn-hide-ondemand', function() {
         $('body').removeClass('ondemand-show');
       });

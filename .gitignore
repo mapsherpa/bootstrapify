@@ -2,3 +2,7 @@
 config.yml
 Archive.zip
 node_modules
+
+*.sublime-project
+
+*.sublime-workspace

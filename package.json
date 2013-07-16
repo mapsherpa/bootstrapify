@@ -21,6 +21,6 @@
     "grunt": "~0.4.1",
     "growl": "~1.7.0",
     "grunt-contrib-watch": "~0.4.4",
-    "grunt-shopify": "git@github.com:mapsherpa/grunt-shopify.git"
+    "grunt-shopify": "git://github.com/mapsherpa/grunt-shopify.git"
   }
 }

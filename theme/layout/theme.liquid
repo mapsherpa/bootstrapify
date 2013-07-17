@@ -38,9 +38,11 @@
   
   {% include 'is_mapsherpa_product' %}
   {% if is_mapsherpa_product or template == 'cart' %}
-  <link rel="stylesheet" href="https://d101wqg5ahvqxl.cloudfront.net/bluetrail/clientdb/ondemand-api.css" type="text/css" charset="utf-8">
-  <!--[if lte IE 8]><link rel="stylesheet" href="https://d101wqg5ahvqxl.cloudfront.net/bluetrail/clientdb/ondemand-api-ie.js" /><![endif]-->
-  <script src="https://d101wqg5ahvqxl.cloudfront.net/bluetrail/clientdb/ondemand-api.js" type="text/javascript" charset="utf-8"></script>
+  {% unless settings.mapsherpa-account == blank or settings.mapsherpa-environment == blank %}
+  <link rel="stylesheet" href="https://d101wqg5ahvqxl.cloudfront.net/{{settings.mapsherpa-account}}/{{settings.mapsherpa-environment}}/ondemand-api.css" type="text/css" charset="utf-8">
+  <!--[if lte IE 8]><link rel="stylesheet" href="https://d101wqg5ahvqxl.cloudfront.net/{{settings.mapsherpa-account}}/{{settings.mapsherpa-environment}}/ondemand-api-ie.js" /><![endif]-->
+  <script src="https://d101wqg5ahvqxl.cloudfront.net/{{settings.mapsherpa-account}}/{{settings.mapsherpa-environment}}/ondemand-api.js" type="text/javascript" charset="utf-8"></script>
+  {% endunless %}
   {% endif %}
 
   {{ 'mapsherpa.js' | asset_url | script_tag }}
@@ -50,6 +52,12 @@
 
 <body class="ondemand-{{settings.map-placement}}{% if settings.show-multiple-currencies %} currencies{% endif %}">
   {% include 'navbar' %}
+
+    {% if settings.mapsherpa-account == blank or settings.mapsherpa-environment == blank %}
+    <div class="container">    
+      <div class="alert alert-error">MapSherpa not configured.  Please set up your MapSherpa Account in the theme settings.</div>
+    </div>
+    {% endif %}
   
   {% if settings.slider-placement == "full-width" and template == "index" %}{% include 'slider' %}{% endif %}
   

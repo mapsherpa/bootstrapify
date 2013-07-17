@@ -1,0 +1,8 @@
+{% assign is_mapsherpa_product = false %}
+{% assign is_not_mapsherpa_product = true %}
+{% for collection in product.collections %}
+  {% if collection.title == 'MapSherpa' %}
+    {% assign is_mapsherpa_product = true %}
+    {% assign is_not_mapsherpa_product = false %}
+  {% endif %}
+{% endfor %}

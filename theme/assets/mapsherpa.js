@@ -6,29 +6,38 @@
     }, 0);
     
     var extent;
+    var currentProduct;
+    var currentTemplate;
+    var currentLayout = 'landscape';
+    var uniqueOptions;
+    var mapping;
+    var selectedOptions;
+    var currentVariant;
     
     // wait for mapsherpa to initialize before we kick off everything
     if (window.mapsherpa) {
       
-    // can't use OnDemand yet, please wait ...
-    $('.btn-launch-ondemand').button('loading');
-    
-    /* handle resizing on initialization and window events */
-    function resize() {
-      var offset = $("#ondemand-customize").offset();
-      var pageWidth = $(window).width();
-      var fudgeFactor = $('body').hasClass('ondemand-full') || pageWidth <= 767 ? 0 : 21;
-      var height = $(window).height() - offset.top - fudgeFactor;
-      $("#ondemand-customize").height(height);
-      $(".ondemand-sidebar-inner").height(height - $('.ondemand-sidebar-footer').height());
-    }
-    $(window).resize(resize);
+      // can't use OnDemand yet, please wait ...
+      $('.btn-launch-ondemand').button('loading');
+      
+      /* handle resizing on initialization and window events */
+      function resize() {
+        var offset = $("#ondemand-customize").offset();
+        var pageWidth = $(window).width();
+        var fudgeFactor = $('body').hasClass('ondemand-full') || pageWidth <= 767 ? 0 : 21;
+        var height = $(window).height() - offset.top - fudgeFactor;
+        $("#ondemand-customize").height(height);
+        $(".ondemand-sidebar-inner").height(height - $('.ondemand-sidebar-footer').height());
+      }
+      $(window).resize(resize);
       
       if (mapsherpa.initialized) {
         mapsherpaSetup();
       } else {
         mapsherpa.on('initialized', mapsherpaSetup);
       }
+    } else {
+      $('.btn-launch-ondemand').attr('disabled', true);
     }
     
     // configure mapsherpa ...
@@ -49,10 +58,10 @@
       $('.ms-pod-preview, .ms-pod-customize')
         .removeClass('ms-pod-btn')
         .addClass('btn')
-        .insertBefore('.ondemand-menu .add-to-cart');
+        //.insertBefore('.ondemand-menu .add-to-cart');
       $('.ms-pod-preview').html("<i class='icon-eye-open'></i><span class='hidden-phone'> Preview</span>");
       $('.ms-pod-customize').html("<i class='icon-pencil'></i><span class='hidden-phone'> Customize</span>");
-	    $('.ondemand-menu').appendTo('.ms-pod-buttons');
+	    //$('.ondemand-menu').appendTo('.ms-pod-buttons');
       $('body').on('click', '.btn-hide-ondemand', function() {
         $('body').removeClass('ondemand-show');
       });
@@ -92,11 +101,7 @@
       });
 
     }
-    
-    var currentProduct
-      , currentTemplate
-      , currentLayout = 'landscape'
-      ;
+
     function customize(productid, templateid, variantid, layout, extent) {
       if (currentProduct != productid || currentTemplate != templateid || currentLayout !== layout) {
         currentProduct = productid;
@@ -133,10 +138,6 @@
       }
     }
       
-    var uniqueOptions;
-    var mapping;
-    var selectedOptions;
-    var currentVariant;
   
     window.mapsherpaProduct = function(product) {
       uniqueOptions = getUniqueOptions(product);

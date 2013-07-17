@@ -1,7 +1,6 @@
 {% include "is_mapsherpa_product" %}
 {% if settings.placement-of-add-to-cart-button == "at-top-of-page" %}{% include 'product-add-to-cart-button' with ' style="margin-top: 0;"' %}{% endif %}
 {% if is_not_mapsherpa_product %}
-{% endif %}
 <div id="product-variants">
   <select id="product-select" name="id">
     {% for v in product.variants %}
@@ -10,7 +9,7 @@
   </select>
 </div>
   
-    
+
 <script type="text/javascript">
 // <![CDATA[  
 var selectCallback = function(variant, selector) {
@@ -53,3 +52,4 @@ jQuery(function() {
 </script>
 {% endif %}
 {% if settings.placement-of-add-to-cart-button == "below-variant-options" %}{% include 'product-add-to-cart-button' %}{% endif %}
+            
